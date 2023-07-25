@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-body">
+            <h5>Faça o traqueamento de onde suas vendas vieram!</h5>
+            <table class="table table-borderless">
+                <thead>
+                    <tr class="border-bottom">
+                        <td class="font-size-17 row">
+                            <div class="mr-3">
+                                <img src="/assets/images/svg/google-ads.svg" alt="Google Ads">
+                            </div>
+                            <div>
+                                <p class="font-weight-bold m-0">Google Ads</p>
+                                <small>Utilize este traqueamento para receber as informações de quantas pessoas
+                                    clicaram no seu anuncio google!</small>
+                            </div>
+                        </td>
+                        <td class="text-right col-1">
+                            <button class="border-0 btn btn-outline-primary font-size-24" data-toggle="modal"
+                                onclick="Page.openPixeltOffer(this)" data-target="#UpdatePixelModal" data-pixel="google"
+                                data-offer="{{ $offer->id }}">
+                                Editar
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <td class="font-size-17 row">
+                            <div class="mr-3">
+                                <img src="/assets/images/svg/facebook.svg" alt="Facebook">
+                            </div>
+                            <div>
+                                <p class="font-weight-bold m-0">Facebook</p>
+                                <small>Use a API do facebook ads para conectar as informações da sua
+                                    venda.</small>
+                            </div>
+                        </td>
+                        <td class="text-right col-1">
+                            <button class="border-0 btn btn-outline-primary font-size-24" data-toggle="modal"
+                                data-target="#UpdatePixelModal" data-whatever="@Facebook">
+                                Editar
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-size-17 row">
+                            <div class="mr-3">
+                                <img src="/assets/images/svg/tiktok.svg" alt="Tiktok">
+                            </div>
+                            <div>
+                                <p class="font-weight-bold m-0">Tiktok</p>
+                                <small>Saiba o quanto o seu produto está caindo na boca do povo no
+                                    tiktok!</small>
+                            </div>
+                        </td>
+                        <td class="text-right col-1">
+                            <button class="border-0 btn btn-outline-primary font-size-24" data-toggle="modal"
+                                data-target="#UpdatePixelModal" data-whatever="@Tiktok">
+
+                                Editar
+                            </button>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="UpdatePixelModal" tabindex="-1" aria-labelledby="UpdatePixelModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="" method="GET">
+                        <div class="align-items-center d-flex justify-content-center">
+                            <img class="p-1 rounded" src="/assets/images/svg/google-ads.svg" alt="Google Ads" width="60"
+                                height="60" style="border: 2px solid #e7e7e7;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-3" height="2em" viewBox="0 0 512 512">
+                                <style>
+                                    svg {
+                                        fill: #9c9c9c
+                                    }
+                                </style>
+                                <path
+                                    d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z" />
+                            </svg>
+                            <img class="p-1 rounded" src="/assets/images/favicon.png" alt="Google Ads" width="60"
+                                height="60" style="border: 2px solid #e7e7e7;">
+                        </div>
+
+                        <div class="my-4 text-center">
+                            <h4>Conecte-se ao <span id="title-social">Google Ads</span></h4>
+                            <h6 id="description-social">Utilize este traqueamento para receber as informações de quantas
+                                pessoas clicaram no seu anuncio google!</h5>
+
+                                <button type="button" class="btn btn-primary btn-add-pixel">Adicionar pixel</button>
+                        </div>
+
+                        <hr class="my-3">
+                        <div id="pixel-container">
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div></div>
+
+    <!-- <div>Form
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+            style="--darkreader-inline-fill: currentColor; --darkreader-inline-stroke: currentColor;"
+            data-darkreader-inline-fill="" data-darkreader-inline-stroke="">
+            <path
+                d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z">
+            </path>
+        </svg>
+        <input type="text" placeholder="Ex: C560PP5424M4KL4LP42J" class="form-control" value="">
+        <div class=""><small>Disparar evento "Purchase" para quais formas de pagamento:</small>
+            <div class="">
+                <div class=""><small>Boleto</small>
+                    <div class=""><input type="checkbox"><span class="slider round"></span></div>
+                </div>
+                <div class=""><small>Cartão</small>
+                    <div class=""><input type="checkbox"><span class="slider round"></span></div>
+                </div>
+                <div class=""><small>Pix</small>
+                    <div class=""><input type="checkbox"><span class="slider round"></span></div>
+                </div>
+            </div>
+        </div>
+        <div class=""><small>Valor de conversão personalizado para (%)</small>
+            <div class="">
+                <div class=""><small>Boleto</small><input placeholder="0,00%" class="" value="0.00%"></div>
+                <div class=""><small>Pix</small><input placeholder="0,00%" class="" value="0.00%"></div>
+                <div class=""><small>Cartão</small><input placeholder="0,00%" class="" value="0.00%"></div>
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+
+
+
+
+
+
+    <script src="jquery.3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="offer.js"></script>
+    <script src="utils.js"></script>
+
+</body>
+
+</html>
