@@ -1,3 +1,207 @@
+const deletedPixelIds = [];
+class PixelComponent {
+  constructor(
+    pixel = "",
+    api = "",
+    sendTicket = false,
+    sendPix = false,
+    sendCard = false,
+    idPixel = 0
+  ) {
+    this.pixel = pixel;
+    this.api = api;
+    this.sendTicket = sendTicket;
+    this.sendPix = sendPix;
+    this.sendCard = sendCard;
+    this.idPixel = idPixel;
+  }
+
+  createPixelComponent() {
+    //Gerar um ID único para o componente
+    const uniqueIdComponent = `pixel-component-${this.idPixel}`;
+
+    // Criar o elemento jQuery para o card
+    const $card = $("<div>")
+      .addClass("card my-3 bg-light border")
+      .attr("id", uniqueIdComponent);
+    const $cardBody = $("<div>").addClass("card-body").appendTo($card);
+
+    // criar o botão "Excluir"
+    const $deleteButton = $("<button>")
+      .attr("id", `delete-pixel-${this.idPixel}`)
+      .attr("type", "button")
+      .addClass("btn btn-danger btn-xs rounded-right mr-n2 mt-n3")
+      .text("Excluir")
+      .append($("<i>").addClass("uil uil-trash-alt"));
+
+    // Quando o botão "Excluir" for clicado
+    $deleteButton.on("click", function () {
+      // remove o card quando for clicado
+      $(`#${uniqueIdComponent}`).remove();
+      // Adiciona o ID do pixel deletado ao array
+      deletedPixelIds.push(this.idPixel);
+    });
+
+    // Adiciona o botão "Excluir" ao cabeçalho
+    $("<div>")
+      .addClass("w-100 text-right")
+      .append($deleteButton)
+      .appendTo($cardBody);
+
+    // Inputs Pixel e API
+    const $formRow = $("<div>").addClass("form-row").appendTo($cardBody);
+    const pixelId = `pixel-id-${this.idPixel}`;
+    $("<div>")
+      .addClass("col-md-6 form-group")
+      .append($("<label>").text("Pixel"))
+      .append(
+        $("<input>")
+          .attr("type", "text")
+          .addClass("form-control")
+          .attr("name", "pixel[]")
+          .attr("id", pixelId)
+          .val(this.pixel)
+          .attr("placeholder", "Seu código do facebook pixels")
+      )
+      .append(
+        $("<input>")
+          .attr("type", "hidden")
+          .attr("name", "pixel_id[]")
+          .val(this.idPixel)
+      )
+      .appendTo($formRow);
+    $("<div>")
+      .addClass("col-md-6 form-group")
+      .append($("<label>").text("API"))
+      .append(
+        $("<input>")
+          .attr("type", "text")
+          .addClass("form-control")
+          .attr("name", "api[]")
+          .val(this.api)
+      )
+      .appendTo($formRow);
+
+    // Checkboxes
+    const $formGroup = $("<div>")
+      .addClass("form-group mt-3")
+      .appendTo($cardBody);
+    $("<label>")
+      .text('Disparar evento "Purchase" para quais formas de pagamento')
+      .appendTo($formGroup);
+
+    const $dFlex = $("<div>").addClass("d-flex").appendTo($formGroup);
+    const InputCheckboxTicket = `pixel-checkbox-ticket-${this.idPixel}`;
+    const InputCheckboxPix = `pixel-checkbox-pix-${this.idPixel}`;
+    const InputCheckboxCard = `pixel-checkbox-card-${this.idPixel}`;
+
+    $("<div>")
+      .addClass("custom-control col custom-switch")
+      .append(
+        $("<input>")
+          .attr("type", "checkbox")
+          .addClass("custom-control-input")
+          .attr("id", InputCheckboxTicket)
+          .attr("name", "sendTicket")
+          .prop("checked", this.sendTicket)
+      )
+      .append(
+        $("<label>")
+          .addClass("custom-control-label")
+          .attr("for", InputCheckboxTicket)
+          .text("Boleto")
+      )
+      .appendTo($dFlex);
+    $("<div>")
+      .addClass("custom-control col custom-switch")
+      .append(
+        $("<input>")
+          .attr("type", "checkbox")
+          .addClass("custom-control-input")
+          .attr("id", InputCheckboxPix)
+          .attr("name", "sendPix")
+          .prop("checked", this.sendPix)
+      )
+      .append(
+        $("<label>")
+          .addClass("custom-control-label")
+          .attr("for", InputCheckboxPix)
+          .text("Pix")
+      )
+      .appendTo($dFlex);
+    $("<div>")
+      .addClass("custom-control col custom-switch")
+      .append(
+        $("<input>")
+          .attr("type", "checkbox")
+          .addClass("custom-control-input")
+          .attr("id", InputCheckboxCard)
+          .attr("name", "sendCard")
+          .prop("checked", this.sendCard)
+      )
+      .append(
+        $("<label>")
+          .addClass("custom-control-label")
+          .attr("for", InputCheckboxCard)
+          .text("Cartão")
+      )
+      .appendTo($dFlex);
+
+    // Input Porcentagem de ( Boleto, Pix, Cartão )
+    const $formRow2 = $("<div>").addClass("form-row").appendTo($cardBody);
+    $("<label>")
+      .text("Valor de conversão personalizado para (%)")
+      .appendTo($formRow2);
+    const $dlfex2 = $("<div>").addClass("d-flex").appendTo($formRow2);
+
+    const InputTicketPercentage = `pixel-percentage-ticket-${this.idPixel}`;
+    const InputPixPercentage = `pixel-percentage-pix-${this.idPixel}`;
+    const InputCardPercentage = `pixel-percentage-card-${this.idPixel}`;
+
+    $("<div>")
+      .addClass("col-md-4 form-group")
+      .append($("<small>").text("Boleto"))
+      .append(
+        $("<input>")
+          .attr("type", "text")
+          .addClass("form-control")
+          .attr("id", InputTicketPercentage)
+          .attr("name", "boleto[]")
+          .attr("placeholder", "0,00%")
+          .val("0,00%")
+      )
+      .appendTo($dlfex2);
+    $("<div>")
+      .addClass("col-md-4 form-group")
+      .append($("<small>").text("Pix"))
+      .append(
+        $("<input>")
+          .attr("type", "text")
+          .addClass("form-control")
+          .attr("id", InputPixPercentage)
+          .attr("name", "pix[]")
+          .attr("placeholder", "0,00%")
+          .val("0,00%")
+      )
+      .appendTo($dlfex2);
+    $("<div>")
+      .addClass("col-md-4 form-group")
+      .append($("<small>").text("Cartão"))
+      .append(
+        $("<input>")
+          .attr("type", "text")
+          .addClass("form-control")
+          .attr("id", InputCardPercentage)
+          .attr("name", "card[]")
+          .attr("placeholder", "0,00%")
+          .val("0,00%")
+      )
+      .appendTo($dlfex2);
+
+    return $card;
+  }
+}
+
 // Mapeamento dos botões e suas informações correspondentes
 const buttonInfoMap = {
   "@GoogleAds": {
@@ -11,15 +215,15 @@ const buttonInfoMap = {
     title: "Facebook",
     description:
       "Use a API do Facebook Ads para conectar as informações da sua venda.",
-      imageUrl: "assets/images/svg/facebook.png",
-      alt: "Facebook",
+    imageUrl: "assets/images/svg/facebook.png",
+    alt: "Facebook",
   },
   "@Tiktok": {
     title: "Tiktok",
     description:
       "Saiba o quanto o seu produto está caindo na boca do povo no Tiktok!",
-      imageUrl: "assets/images/svg/tiktok.png",
-      alt: "Tiktok",
+    imageUrl: "assets/images/svg/tiktok.png",
+    alt: "Tiktok",
   },
 };
 
@@ -27,6 +231,7 @@ const Page = {
   init: () => {
     Page.setListeners();
     Page.submitForm();
+    Page.clickAddPixel();
   },
 
   setListeners: () => {},
@@ -161,320 +366,125 @@ const Page = {
     });
   },
 
-  createPixelFacebook: (
-    pixel = "",
-    api = "",
-    sendTicket = false,
-    sendPix = false,
-    sendCard = false,
-    idPixel = "0"
-  ) => {
-    const $card = $("<div>").addClass("card bg-light border");
-    const $cardBody = $("<div>").addClass("card-body").appendTo($card);
+  // createPixelFacebook: (
+  //   pixel = "",
+  //   api = "",
+  //   sendTicket = false,
+  //   sendPix = false,
+  //   sendCard = false,
+  //   idPixel = "0"
+  // ) => {
+  //   const $card = $("<div>").addClass("card bg-light border");
+  //   const $cardBody = $("<div>").addClass("card-body").appendTo($card);
 
-    // Cabeçalho
-    $("<div>")
-      .addClass("w-100 text-right")
-      .append(
-        $("<button>")
-          .attr("type", "button")
-          .addClass("btn btn-danger btn-xs rounded-right mr-n2 mt-n3")
-          .append($("<i>").addClass("uil uil-trash-alt"))
-      )
-      .appendTo($cardBody);
+  //   // Cabeçalho
+  //   $("<div>")
+  //     .addClass("w-100 text-right")
+  //     .append(
+  //       $("<button>")
+  //         .attr("type", "button")
+  //         .addClass("btn btn-danger btn-xs rounded-right mr-n2 mt-n3")
+  //         .append($("<i>").addClass("uil uil-trash-alt"))
+  //     )
+  //     .appendTo($cardBody);
 
-    // Inputs Pixel e API
-    const $formRow = $("<div>").addClass("form-row").appendTo($cardBody);
-    const pixelId = `pixel-id-${idPixel}`; // ID do input pixel
-    $("<div>")
-      .addClass("col-md-6 form-group")
-      .append($("<label>").text("Pixel"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("name", "pixel[]")
-          .attr("id", pixelId)
-          .val(pixel)
-      )
-      .append(
-        $("<input>")
-          .attr("type", "hidden")
-          .attr("name", "pixel_id[]")
-          .val(idPixel)
-      )
-      .appendTo($formRow);
-    $("<div>")
-      .addClass("col-md-6 form-group")
-      .append($("<label>").text("API"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("name", "api[]")
-          .val(api)
-      )
-      .appendTo($formRow);
+  //   // Inputs Pixel e API
+  //   const $formRow = $("<div>").addClass("form-row").appendTo($cardBody);
+  //   const pixelId = `pixel-id-${idPixel}`; // ID do input pixel
+  //   $("<div>")
+  //     .addClass("col-md-6 form-group")
+  //     .append($("<label>").text("Pixel"))
+  //     .append(
+  //       $("<input>")
+  //         .attr("type", "text")
+  //         .addClass("form-control")
+  //         .attr("name", "pixel[]")
+  //         .attr("id", pixelId)
+  //         .val(pixel)
+  //     )
+  //     .append(
+  //       $("<input>")
+  //         .attr("type", "hidden")
+  //         .attr("name", "pixel_id[]")
+  //         .val(idPixel)
+  //     )
+  //     .appendTo($formRow);
+  //   $("<div>")
+  //     .addClass("col-md-6 form-group")
+  //     .append($("<label>").text("API"))
+  //     .append(
+  //       $("<input>")
+  //         .attr("type", "text")
+  //         .addClass("form-control")
+  //         .attr("name", "api[]")
+  //         .val(api)
+  //     )
+  //     .appendTo($formRow);
 
-    // Checkboxes
-    const $formGroup = $("<div>")
-      .addClass("form-group mt-3")
-      .appendTo($cardBody);
-    $("<label>")
-      .text('Disparar evento "Purchase" para quais formas de pagamento')
-      .appendTo($formGroup);
-    const $dFlex = $("<div>").addClass("d-flex").appendTo($formGroup);
-    $("<div>")
-      .addClass("custom-control col custom-switch")
-      .append(
-        $("<input>")
-          .attr("type", "checkbox")
-          .addClass("custom-control-input")
-          .attr("id", "pixel-active-ticket")
-          .attr("name", "sendTicket")
-          .prop("checked", sendTicket)
-      )
-      .append(
-        $("<label>")
-          .addClass("custom-control-label")
-          .attr("for", "pixel-active-ticket")
-          .text("Boleto")
-      )
-      .appendTo($dFlex);
-    $("<div>")
-      .addClass("custom-control col custom-switch")
-      .append(
-        $("<input>")
-          .attr("type", "checkbox")
-          .addClass("custom-control-input")
-          .attr("id", "pixel-active-pix")
-          .attr("name", "sendPix")
-          .prop("checked", sendPix)
-      )
-      .append(
-        $("<label>")
-          .addClass("custom-control-label")
-          .attr("for", "pixel-active-pix")
-          .text("Pix")
-      )
-      .appendTo($dFlex);
-    $("<div>")
-      .addClass("custom-control col custom-switch")
-      .append(
-        $("<input>")
-          .attr("type", "checkbox")
-          .addClass("custom-control-input")
-          .attr("id", InputCard)
-          .attr("name", "sendCard")
-          .prop("checked", sendCard)
-      )
-      .append(
-        $("<label>")
-          .addClass("custom-control-label")
-          .attr("for", InputCard)
-          .text("Cartão")
-      )
-      .appendTo($dFlex);
+  //   // Checkboxes
+  //   const $formGroup = $("<div>")
+  //     .addClass("form-group mt-3")
+  //     .appendTo($cardBody);
+  //   $("<label>")
+  //     .text('Disparar evento "Purchase" para quais formas de pagamento')
+  //     .appendTo($formGroup);
+  //   const $dFlex = $("<div>").addClass("d-flex").appendTo($formGroup);
+  //   $("<div>")
+  //     .addClass("custom-control col custom-switch")
+  //     .append(
+  //       $("<input>")
+  //         .attr("type", "checkbox")
+  //         .addClass("custom-control-input")
+  //         .attr("id", "pixel-active-ticket")
+  //         .attr("name", "sendTicket")
+  //         .prop("checked", sendTicket)
+  //     )
+  //     .append(
+  //       $("<label>")
+  //         .addClass("custom-control-label")
+  //         .attr("for", "pixel-active-ticket")
+  //         .text("Boleto")
+  //     )
+  //     .appendTo($dFlex);
+  //   $("<div>")
+  //     .addClass("custom-control col custom-switch")
+  //     .append(
+  //       $("<input>")
+  //         .attr("type", "checkbox")
+  //         .addClass("custom-control-input")
+  //         .attr("id", "pixel-active-pix")
+  //         .attr("name", "sendPix")
+  //         .prop("checked", sendPix)
+  //     )
+  //     .append(
+  //       $("<label>")
+  //         .addClass("custom-control-label")
+  //         .attr("for", "pixel-active-pix")
+  //         .text("Pix")
+  //     )
+  //     .appendTo($dFlex);
+  //   $("<div>")
+  //     .addClass("custom-control col custom-switch")
+  //     .append(
+  //       $("<input>")
+  //         .attr("type", "checkbox")
+  //         .addClass("custom-control-input")
+  //         .attr("id", InputCard)
+  //         .attr("name", "sendCard")
+  //         .prop("checked", sendCard)
+  //     )
+  //     .append(
+  //       $("<label>")
+  //         .addClass("custom-control-label")
+  //         .attr("for", InputCard)
+  //         .text("Cartão")
+  //     )
+  //     .appendTo($dFlex);
 
-    return $card;
-  },
+  //   return $card;
+  // },
 
-  deletedPixelIds: [],
-
-  // Função para criar o componente
-  createPixelComponent: (
-    pixel = "",
-    api = "",
-    sendTicket = false,
-    sendPix = false,
-    sendCard = false,
-    idPixel = 0
-  ) => {
-    // Gerar um ID único para o componente
-    const uniqueIdComponent = `pixel-component-${idPixel}`;
-
-    // Criar o elemento jQuery para o card
-    const $card = $("<div>")
-      .addClass("card my-3 bg-light border")
-      .attr("id", uniqueIdComponent);
-    const $cardBody = $("<div>").addClass("card-body").appendTo($card);
-
-    // criar o botão "Excluir"
-    const $deleteButton = $("<button>")
-      .attr("id", `delete-pixel-${idPixel}`)
-      .attr("type", "button")
-      .addClass("btn btn-danger btn-xs rounded-right mr-n2 mt-n3")
-      .text("Excluir")
-      .append($("<i>").addClass("uil uil-trash-alt"));
-
-    // Quando o botão "Excluir" for clicado
-    $deleteButton.on("click", function () {
-      // remove o card quando for clicado
-      $(`#${uniqueIdComponent}`).remove();
-      // Adiciona o ID do pixel deletado ao array
-      Page.deletedPixelIds.push(idPixel);
-    });
-
-    // Adiciona o botão "Excluir" ao cabeçalho
-    $("<div>")
-      .addClass("w-100 text-right")
-      .append($deleteButton)
-      .appendTo($cardBody);
-
-    // Inputs Pixel e API
-    const $formRow = $("<div>").addClass("form-row").appendTo($cardBody);
-    const pixelId = `pixel-id-${idPixel}`;
-    $("<div>")
-      .addClass("col-md-6 form-group")
-      .append($("<label>").text("Pixel"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("name", "pixel[]")
-          .attr("id", pixelId)
-          .val(pixel)
-          .attr("placeholder", "Seu código do facebook pixels")
-      )
-      .append(
-        $("<input>")
-          .attr("type", "hidden")
-          .attr("name", "pixel_id[]")
-          .val(idPixel)
-      )
-      .appendTo($formRow);
-    $("<div>")
-      .addClass("col-md-6 form-group")
-      .append($("<label>").text("API"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("name", "api[]")
-          .val(api)
-      )
-      .appendTo($formRow);
-
-    // Checkboxes
-    const $formGroup = $("<div>")
-      .addClass("form-group mt-3")
-      .appendTo($cardBody);
-    $("<label>")
-      .text('Disparar evento "Purchase" para quais formas de pagamento')
-      .appendTo($formGroup);
-
-    const $dFlex = $("<div>").addClass("d-flex").appendTo($formGroup);
-    const InputCheckboxTicket = `pixel-checkbox-ticket-${idPixel}`;
-    const InputCheckboxPix = `pixel-checkbox-pix-${idPixel}`;
-    const InputCheckboxCard = `pixel-checkbox-card-${idPixel}`;
-
-    $("<div>")
-      .addClass("custom-control col custom-switch")
-      .append(
-        $("<input>")
-          .attr("type", "checkbox")
-          .addClass("custom-control-input")
-          .attr("id", InputCheckboxTicket)
-          .attr("name", "sendTicket")
-          .prop("checked", sendTicket)
-      )
-      .append(
-        $("<label>")
-          .addClass("custom-control-label")
-          .attr("for", InputCheckboxTicket)
-          .text("Boleto")
-      )
-      .appendTo($dFlex);
-    $("<div>")
-      .addClass("custom-control col custom-switch")
-      .append(
-        $("<input>")
-          .attr("type", "checkbox")
-          .addClass("custom-control-input")
-          .attr("id", InputCheckboxPix)
-          .attr("name", "sendPix")
-          .prop("checked", sendPix)
-      )
-      .append(
-        $("<label>")
-          .addClass("custom-control-label")
-          .attr("for", InputCheckboxPix)
-          .text("Pix")
-      )
-      .appendTo($dFlex);
-    $("<div>")
-      .addClass("custom-control col custom-switch")
-      .append(
-        $("<input>")
-          .attr("type", "checkbox")
-          .addClass("custom-control-input")
-          .attr("id", InputCheckboxCard)
-          .attr("name", "sendCard")
-          .prop("checked", sendCard)
-      )
-      .append(
-        $("<label>")
-          .addClass("custom-control-label")
-          .attr("for", InputCheckboxCard)
-          .text("Cartão")
-      )
-      .appendTo($dFlex);
-
-    // Input Porcentagem de ( Boleto, Pix, Cartão )
-    const $formRow2 = $("<div>").addClass("form-row").appendTo($cardBody);
-    $("<label>")
-      .text("Valor de conversão personalizado para (%)")
-      .appendTo($formRow2);
-    const $dlfex2 = $("<div>").addClass("d-flex").appendTo($formRow2);
-
-    const InputTicketPercentage = `pixel-percentage-ticket-${idPixel}`;
-    const InputPixPercentage = `pixel-percentage-pix-${idPixel}`;
-    const InputCardPercentage = `pixel-percentage-card-${idPixel}`;
-
-    $("<div>")
-      .addClass("col-md-4 form-group")
-      .append($("<small>").text("Boleto"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("id", InputTicketPercentage)
-          .attr("name", "boleto[]")
-          .attr("placeholder", "0,00%")
-          .val("0,00%")
-      )
-      .appendTo($dlfex2);
-    $("<div>")
-      .addClass("col-md-4 form-group")
-      .append($("<small>").text("Pix"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("id", InputPixPercentage)
-          .attr("name", "pix[]")
-          .attr("placeholder", "0,00%")
-          .val("0,00%")
-      )
-      .appendTo($dlfex2);
-    $("<div>")
-      .addClass("col-md-4 form-group")
-      .append($("<small>").text("Cartão"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("id", InputCardPercentage)
-          .attr("name", "card[]")
-          .attr("placeholder", "0,00%")
-          .val("0,00%")
-      )
-      .appendTo($dlfex2);
-
-    return $card;
-  },
-
-  init: function () {
+  clickAddPixel: () => {
     $(document).ready(function () {
       $(".btn-add-pixel").on("click", function () {
         // Contando quantos elementos com a classe .card existem
@@ -490,15 +500,15 @@ const Page = {
         });
 
         let newIdPixel = maxUsedId + 1;
-        while (Page.deletedPixelIds.includes(newIdPixel)) {
+        while (deletedPixelIds.includes(newIdPixel)) {
           console.log(
-            "🚀 ~ file: offer.js:282 ~ Page.deletedPixelIds.includes(newIdPixel):",
-            Page.deletedPixelIds.includes(newIdPixel)
+            "🚀 ~ file: offer.js:282 ~ deletedPixelIds.includes(newIdPixel):",
+            deletedPixelIds.includes(newIdPixel)
           );
           newIdPixel++;
         }
 
-        const pixelComponent = Page.createPixelComponent(
+        const pixelComponentInstance = new PixelComponent(
           "",
           "",
           false,
@@ -506,6 +516,8 @@ const Page = {
           false,
           newIdPixel
         );
+
+        const pixelComponent = pixelComponentInstance.createPixelComponent();
 
         $("#pixel-container").append(pixelComponent);
       });
