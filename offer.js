@@ -16,7 +16,7 @@ class PixelComponent {
     this.idPixel = idPixel;
   }
 
-  createPixelComponent() {
+  createPixelComponent(whatever) {
     //Gerar um ID único para o componente
     const uniqueIdComponent = `pixel-component-${this.idPixel}`;
 
@@ -51,36 +51,44 @@ class PixelComponent {
     // Inputs Pixel e API
     const $formRow = $("<div>").addClass("form-row").appendTo($cardBody);
     const pixelId = `pixel-id-${this.idPixel}`;
-    $("<div>")
-      .addClass("col-md-6 form-group")
-      .append($("<label>").text("Pixel"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("name", "pixel[]")
-          .attr("id", pixelId)
-          .val(this.pixel)
-          .attr("placeholder", "Seu código do facebook pixels")
-      )
-      .append(
-        $("<input>")
-          .attr("type", "hidden")
-          .attr("name", "pixel_id[]")
-          .val(this.idPixel)
-      )
-      .appendTo($formRow);
-    $("<div>")
-      .addClass("col-md-6 form-group")
-      .append($("<label>").text("API"))
-      .append(
-        $("<input>")
-          .attr("type", "text")
-          .addClass("form-control")
-          .attr("name", "api[]")
-          .val(this.api)
-      )
-      .appendTo($formRow);
+    if (whatever === "google") {
+      // <div class="sc-dskThN fAAGuw">
+      //   <input style="width: 40%;" class="form-control" placeholder="UW-XXXXXXXX" value="">
+      //   <input style="width: 60%;" class="form-control" type="text" placeholder="Label de conversão" value="">
+      // </div>
+    } else if (whatever === "facebook") {
+      $("<div>")
+        .addClass("col-md-6 form-group")
+        .append($("<label>").text("Pixel"))
+        .append(
+          $("<input>")
+            .attr("type", "text")
+            .addClass("form-control")
+            .attr("name", "pixel[]")
+            .attr("id", pixelId)
+            .val(this.pixel)
+            .attr("placeholder", "Seu código do facebook pixels")
+        )
+        .append(
+          $("<input>")
+            .attr("type", "hidden")
+            .attr("name", "pixel_id[]")
+            .val(this.idPixel)
+        )
+        .appendTo($formRow);
+      $("<div>")
+        .addClass("col-md-6 form-group")
+        .append($("<label>").text("API"))
+        .append(
+          $("<input>")
+            .attr("type", "text")
+            .addClass("form-control")
+            .attr("name", "api[]")
+            .val(this.api)
+        )
+        .appendTo($formRow);
+    } else if (whatever === "tiktok") {
+    }
 
     // Checkboxes
     const $formGroup = $("<div>")
