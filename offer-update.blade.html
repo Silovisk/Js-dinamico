@@ -39,7 +39,7 @@
                 <button
                   class="border-0 btn btn-outline-primary font-size-24"
                   data-toggle="modal"
-                  onclick="Page.openPixeltOffer(this)"
+                  onclick="Page.openModalPixeltOffer(this)"
                   data-target="#UpdatePixelModal"
                   data-whatever="@GoogleAds"
                   data-offer="{{ $offer->id }}"
@@ -65,9 +65,10 @@
                 <button
                   class="border-0 btn btn-outline-primary font-size-24"
                   data-toggle="modal"
-                  onclick="Page.openPixeltOffer(this)"
+                  onclick="Page.openModalPixeltOffer(this)"
                   data-target="#UpdatePixelModal"
                   data-whatever="@Facebook"
+                  data-offer="{{ $offer->id }}"
                 >
                   Editar
                 </button>
@@ -91,9 +92,10 @@
                   id="modal-btn"
                   class="border-0 btn btn-outline-primary font-size-24"
                   data-toggle="modal"
-                  onclick="Page.openPixeltOffer(this)"
+                  onclick="Page.openModalPixeltOffer(this)"
                   data-target="#UpdatePixelModal"
                   data-whatever="@Tiktok"
+                  data-offer="{{ $offer->id }}"
                 >
                   Editar
                 </button>
@@ -174,50 +176,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="">
-      <div class="">
-        <div class="">
-          <input
-            style="width: 40%"
-            class="form-control"
-            placeholder="UW-XXXXXXXX"
-            value=""
-          /><input
-            style="width: 60%"
-            class="form-control"
-            type="text"
-            placeholder="Label de conversão"
-            value=""
-          />
-        </div>
-        <div class="">
-          <small
-            >Disparar evento "Purchase" para quais formas de pagamento:</small
-          >
-          <div class="">
-            <div class="">
-              <small>Boleto</small>
-              <div class="">
-                <input type="checkbox" /><span class="slider round"></span>
-              </div>
-            </div>
-            <div class="">
-              <small>Cartão</small>
-              <div class="">
-                <input type="checkbox" /><span class="slider round"></span>
-              </div>
-            </div>
-            <div class="">
-              <small>Pix</small>
-              <div class="">
-                <input type="checkbox" /><span class="slider round"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
     
     <script src="jquery.3.7.0.js"></script>
     <script
@@ -233,6 +191,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
     <script src="offer.js"></script>
     <script src="utils.js"></script>
   </body>

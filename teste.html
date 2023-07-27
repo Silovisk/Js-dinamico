@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="col-md-6 form-group">
+          <label>Pixel do Facebook</label
+          ><input
+            type="text"
+            class="form-control"
+            name="pixel[]"
+            id="pixel-id-1"
+            placeholder="Apenas ID do Pixel"
+          /><input type="hidden" name="pixel_id[]" value="1" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 form-group">
+          <label>Token da API do Facebook</label
+          ><input
+            type="text"
+            class="form-control"
+            name="api[]"
+            id="pixel-id-1"
+            placeholder="EAA5XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+          /><input type="hidden" name="api_id[]" value="1" />
+        </div>
+      </div>
+      <div class="form-group mt-3"><div class="form-group mt-3"></div></div>
+      <div class="form-row">
+        <label>Disparar evento "Purchase" para quais formas de pagamento</label>
+        <div class="d-flex">
+          <div class="custom-control col custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="pixel-checkbox-ticket-1"
+              name="sendTicket"
+            /><label class="custom-control-label" for="pixel-checkbox-ticket-1"
+              >Boleto</label
+            >
+          </div>
+          <div class="custom-control col custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="pixel-checkbox-pix-1"
+              name="sendPix"
+            /><label class="custom-control-label" for="pixel-checkbox-pix-1"
+              >Pix</label
+            >
+          </div>
+          <div class="custom-control col custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="pixel-checkbox-card-1"
+              name="sendCard"
+            /><label class="custom-control-label" for="pixel-checkbox-card-1"
+              >Cartão</label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-3"><div class="col-md-4 form-group"></div></div>
+      <div class="form-row">
+        <label>Valor de conversão personalizado para (%)</label>
+        <div class="d-flex">
+          <div class="col-md-4 form-group">
+            <small>Boleto</small
+            ><input
+              type="text"
+              class="form-control"
+              id="pixel-percentage-ticket-1"
+              name="boleto[]"
+              placeholder="0,00%"
+            />
+          </div>
+          <div class="col-md-4 form-group">
+            <small>Pix</small
+            ><input
+              type="text"
+              class="form-control"
+              id="pixel-percentage-pix-1"
+              name="pix[]"
+              placeholder="0,00%"
+            />
+          </div>
+          <div class="col-md-4 form-group">
+            <small>Cartão</small
+            ><input
+              type="text"
+              class="form-control"
+              id="pixel-percentage-card-1"
+              name="card[]"
+              placeholder="0,00%"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
